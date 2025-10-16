@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User Form</title>
+    <style>
+        /* Background styling */
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #d7fe89, #66a6ff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        
+        .form-container {
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(172, 48, 206, 0.15);
+            padding: 40px 50px;
+            width: 400px;
+            text-align: center;
+            animation: slideUp 1s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Heading animation */
+        h1 {
+            color: #7d7979;
+            margin-bottom: 25px;
+            position: relative;
+            animation: fadeIn 1.2s ease;
+        }
+
+        /* Labels and input fields */
+        label {
+            display: block;
+            text-align: left;
+            font-weight: 600;
+            color: #444;
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+
+        input[type="text"],
+        input[type="email"] {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 15px;
+            outline: none;
+            transition: 0.3s;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus {
+            border-color: #66a6ff;
+            box-shadow: 0 0 8px rgba(102, 166, 255, 0.4);
+        }
+
+        /* Animated Save button */
+        button {
+            background: #4c83ff;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.4s ease;
+            width: 100%;
+        }
+
+        button:hover {
+            background: #345dd8;
+            box-shadow: 0 0 15px rgba(76, 131, 255, 0.6);
+            transform: scale(1.05);
+        }
+
+        /* Decorative floating circles animation */
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(102, 166, 255, 0.2);
+            animation: floatCircle 6s infinite ease-in-out;
+        }
+
+        .circle:nth-child(1) {
+            width: 80px; height: 80px;
+            top: -30px; right: -30px;
+            animation-delay: 0s;
+        }
+
+        .circle:nth-child(2) {
+            width: 120px; height: 120px;
+            bottom: -40px; left: -40px;
+            animation-delay: 2s;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes floatCircle {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <div class="circle"></div>
+        <div class="circle"></div>
+
+        <h1 th:if="${user.id == null}">Create User</h1>
+        <h1 th:if="${user.id != null}">Edit User</h1>
+
+        <form th:action="${user.id == null} ? @{/users} : @{/users/update/{id}(id=${user.id})}"
+              th:object="${user}" method="post">
+            <label>Name:</label>
+            <input type="text" th:field="*{name}" placeholder="Enter user name" />
+
+            <label>Email:</label>
+            <input type="email" th:field="*{email}" placeholder="Enter email address" />
+
+            <button type="submit">Save</button>
+        </form>
+    </div>
+</body>
+</html>

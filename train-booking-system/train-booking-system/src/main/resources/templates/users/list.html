@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Users</title>
+    <style>
+        /* 🌅 Background setup */
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #89f7fe, #66a6ff);
+            margin: 0;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease;
+        }
+
+        /* ➕ Add button styling */
+        a.add-btn {
+            background: #4c83ff;
+            color: white;
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: 0.3s;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        a.add-btn:hover {
+            background: #345dd8;
+            box-shadow: 0 4px 12px rgba(52, 93, 216, 0.4);
+            transform: scale(1.05);
+        }
+
+        /* 🧾 Table styling */
+        table {
+            border-collapse: collapse;
+            width: 90%;
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            animation: slideUp 1s ease;
+        }
+
+        th, td {
+            padding: 14px 16px;
+            text-align: center;
+        }
+
+        th {
+            background: #4c83ff;
+            color: white;
+            font-size: 16px;
+        }
+
+        tr:nth-child(even) {
+            background-color: rgba(240, 240, 240, 0.9);
+        }
+
+        tr:hover {
+            background-color: rgba(76, 131, 255, 0.1);
+            transition: 0.3s;
+        }
+
+        /* ✏️ Action buttons */
+        td a {
+            text-decoration: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            color: white;
+            transition: 0.3s;
+        }
+
+        td a:nth-child(1) {
+            background-color: #00b894; /* Edit */
+        }
+
+        td a:nth-child(1):hover {
+            background-color: #019874;
+        }
+
+        td a:nth-child(2) {
+            background-color: #d63031; /* Delete */
+            margin-left: 8px;
+        }
+
+        td a:nth-child(2):hover {
+            background-color: #b52b2b;
+        }
+
+        /* 🚄 Bullet Train Animation */
+        .train {
+            position: fixed;
+            bottom: 40px;
+            left: -200px;
+            width: 150px;
+            animation: moveTrain 12s linear infinite;
+            z-index: 0;
+            opacity: 0.8;
+        }
+
+        @keyframes moveTrain {
+            0% {
+                left: -200px;
+                transform: scaleX(1);
+            }
+            50% {
+                left: calc(100% - 150px);
+                transform: scaleX(1);
+            }
+            51% {
+                transform: scaleX(-1);
+            }
+            100% {
+                left: -200px;
+                transform: scaleX(-1);
+            }
+        }
+
+        /* 🎬 Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Users</h1>
+
+    <a href="/users/new" class="add-btn">+ Add New User</a>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.email}"></td>
+            <td>
+                <a th:href="@{/users/edit/{id}(id=${user.id})}">Edit</a>
+                <a th:href="@{/users/delete/{id}(id=${user.id})}">Delete</a>
+            </td>
+        </tr>
+    </table>
+
+    
+   
+</body>
+</html>
